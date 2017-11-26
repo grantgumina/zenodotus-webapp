@@ -1,9 +1,21 @@
+var dotenv = require('dotenv').config();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+let REDIS_PORT = process.env.REDIS_PORT;
+let REDIS_URL = process.env.REDIS_URL;
+let REDIS_PASSWORD = process.env.REDIS_PASSWORD;
+
+var redis = require('redis');
+var redisClient = redis.createClient({host: REDIS_URL, port: REDIS_PORT, password: REDIS_PASSWORD});
+
+redisClient.get('hubot:storage', function(err, hubotStorage) {
+    console.log(hubotStorage);
+});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -12,7 +24,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -55,6 +67,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;
