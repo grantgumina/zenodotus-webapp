@@ -5,18 +5,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-let REDIS_PORT = process.env.REDIS_PORT;
-let REDIS_URL = process.env.REDIS_URL;
-let REDIS_PASSWORD = process.env.REDIS_PASSWORD;
-
-var redis = require('redis');
-var redisClient = redis.createClient({host: REDIS_URL, port: REDIS_PORT, password: REDIS_PASSWORD});
-
-redisClient.get('hubot:storage', function(err, hubotStorage) {
-    console.log(hubotStorage);
-});
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
