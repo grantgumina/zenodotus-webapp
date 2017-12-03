@@ -4,6 +4,7 @@
     <title></title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/dashboard.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
     <script type="text/javascript" src="/javascripts/popper.min.js"></script>
     <script type="text/javascript" src="/javascripts/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/javascripts/tether.min.js"></script>
@@ -15,6 +16,15 @@
 </html>
 
 <body>
+    <!-- Templates -->
+    <script type="text/x-template" id="vue-message-template">
+        <div class="message">
+            <span>@{{message.sender}}</span><span> [#{{message.channel}}]</span><span>: {{message.body}}</span>
+            <br/>
+            <span>[<a href="http://message.deeplink">Deeplink</a>]</span>
+        </div>
+    </script>        
+
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -22,25 +32,30 @@
         
         <a class="navbar-brand" href="#">Zenodotus</a>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Search isn't working yet -->
+        <!-- <div class="collapse navbar-collapse" id="navbarNav">
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search"/>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-        </div>
+        </div> -->
     </nav>
 
     <div class="container-fluid">
         <div class="row" id="vue-area">
             <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
                 <ul class="nav nav-pills flex-column">
-                    <li class="nav-item" v-for="tag in tags">
-                        <a v-on:click="loadMessageForTagId(tag.id)" class="nav-link" href="#">{{tag.name}}</a>
+                    <li class="nav-item" v-bind:class="isTagActive(tag)" v-for="tag in tags">
+                        <a v-on:click="loadMessageForTag(tag)" class="nav-link" href="#">{{tag.name}}</a>
                     </li>
                 </ul>
             </nav>
             <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-                
+                <ul class="messages">
+                    <li v-for="message in messagesForSelectedTag">
+                        <vue-message v-bind:message="message"></vue-message>
+                    </li>
+                </ul>
             </main>
         </div>
     </div>

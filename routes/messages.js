@@ -1,7 +1,7 @@
 
 var express = require('express');
 var router = express.Router();
-const StorageManager = require('../utils/StorageManager.js');
+const StorageManager = require('zenodotus-storage-manager');
 
 /* GET messages for a tagId */
 router.get('/tagid/:tagId', function (req, res) {

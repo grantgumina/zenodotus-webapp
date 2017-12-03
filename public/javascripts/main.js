@@ -1,8 +1,14 @@
+Vue.component('vue-message', {
+    template: '#vue-message-template',
+    props: ['message']
+});
+
 var main = new Vue({
     el: '#vue-area',
     
     data: {
-        messagesOnView: []
+        messagesForSelectedTag: [],
+        selectedTag: {}
     },
     
     asyncComputed: {
@@ -22,12 +28,23 @@ var main = new Vue({
     },
 
     methods: {
-        loadMessageForTagId: function(tagId) {
-            axios.get('/messages/tagid/' + tagId).then(response => {
-                console.log(response);
+        loadMessageForTag: function(tag) {
+            // var self = this;
+            axios.get('/messages/tagid/' + tag.id).then(response => {
+                this.messagesForSelectedTag = response.data;
+                this.selectedTag = tag;
             }).catch(error => {
                 console.log(error);
             })
+        },
+
+        isTagActive: function(tag) {
+            var result = [];
+            if (tag == this.selectedTag) {
+                result.push('active');
+            }
+
+            return result;
         }
     }
 });
