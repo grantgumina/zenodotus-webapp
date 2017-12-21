@@ -37,14 +37,11 @@ var main = new Vue({
                 
                 foundURLs.forEach(function(url, index) {
 
-                    let formattedURL = "";
-                    let httpPrefix = 'http://';
-                    let httpsPrefix = 'https://';
-                    if (url.substr(0, httpPrefix.length) !== httpPrefix) {
-                        formattedURL = httpPrefix + url;
-                    } else if (url.substr(0, httpsPrefix.length) !== httpsPrefix) {
-                        formattedURL = httpsPrefix + url;
-                    }
+                    let formattedURL = url;
+
+                    if (!/^(f|ht)tps?:\/\//i.test(url)) {
+                        formattedURL = "http://" + url;
+                     }
 
                     message.body = message.body.replace(url, '<a href="' + formattedURL + '">' + url + '</a>');
                 });
