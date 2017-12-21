@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const StorageManager = require('zenodotus-storage-manager');
+const StorageManager = require('zenodotus-shared/StorageManager');
 
 /* GET tags listing */
 router.get('/', function (req, res) {

@@ -19,7 +19,7 @@
     <!-- Templates -->
     <script type="text/x-template" id="vue-message-template">
         <div class="message">
-            <span>@{{message.sender}}</span><span> [#{{message.channel}}]</span><span>: {{message.body}}</span>
+            <span>@{{message.sender}}</span><span> [#{{message.channel}}]</span>: <span v-html="message.body"></span>
             <br/>
             <span>[<a href="http://message.deeplink">Deeplink</a>]</span>
         </div>
@@ -52,7 +52,7 @@
             </nav>
             <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
                 <ul class="messages">
-                    <li v-for="message in messagesForSelectedTag">
+                    <li v-for="message in formattedMessagesForSelectedTag">
                         <vue-message v-bind:message="message"></vue-message>
                     </li>
                 </ul>
