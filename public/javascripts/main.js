@@ -43,7 +43,7 @@ var main = new Vue({
                         formattedURL = "http://" + url;
                      }
 
-                    message.body = message.body.replace(url, '<a href="' + formattedURL + '">' + url + '</a>');
+                    message.body = message.body.replace(url, '<a target="_blank" href="' + formattedURL + '">' + url + '</a>');
                 });
 
                 return message;
