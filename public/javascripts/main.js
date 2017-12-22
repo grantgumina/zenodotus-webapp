@@ -3,7 +3,23 @@ const TAGREGEX = /\^([^\s][^0-9][a-z]*)/g;
 
 Vue.component('vue-message', {
     template: '#vue-message-template',
-    props: ['message']
+    props: ['message'],
+    computed: {
+        messageDeeplink: function() {
+            var messageDeeplink = this.message.deeplink;
+
+            var foundURLs = this.message.deeplink.match(URLREGEX);
+            foundURLs = foundURLs ? foundURLs : [];
+            
+            foundURLs.forEach(function(url, index) {
+                if (!/^(f|ht)tps?:\/\//i.test(url)) {
+                    messageDeeplink = "http://" + url;
+                }
+            });
+
+            return messageDeeplink;
+        }
+    }
 });
 
 var main = new Vue({
@@ -36,16 +52,16 @@ var main = new Vue({
                 foundURLs = foundURLs ? foundURLs : [];
                 
                 foundURLs.forEach(function(url, index) {
-
+            
                     let formattedURL = url;
-
+            
                     if (!/^(f|ht)tps?:\/\//i.test(url)) {
                         formattedURL = "http://" + url;
-                     }
-
+                    }
+            
                     message.body = message.body.replace(url, '<a target="_blank" href="' + formattedURL + '">' + url + '</a>');
                 });
-
+            
                 return message;
             });
         }

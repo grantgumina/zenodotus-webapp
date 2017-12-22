@@ -21,9 +21,9 @@
         <div class="message">
             <span>@{{message.sender}}</span><span> [#{{message.channel}}]</span>: <span v-html="message.body"></span>
             <br/>
-            <span>[<a target="_blank" href="http://message.deeplink">Deeplink</a>]</span>
+            <span>[<a target="_blank" v-bind:href="messageDeeplink">Deeplink</a>]</span>
         </div>
-    </script>        
+    </script>
 
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
