@@ -13,3 +13,17 @@ ul.messages {
 	margin-bottom: 15px;
 	border-radius: 5px;
 }
+
+.nav-item {
+	padding: 15px;
+	cursor: pointer;
+}
+
+.nav-link {
+	padding: 0px;
+	display: inline;
+}
+
+.nav-link:hover {
+	color: #0275d8;
+}

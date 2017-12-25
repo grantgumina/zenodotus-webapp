@@ -27,14 +27,16 @@ var main = new Vue({
     
     data: {
         messagesForSelectedTag: [],
-        selectedTag: {}
+        selectedTag: {},
+        tags: {}
     },
     
     asyncComputed: {
-        tags: {
+        asyncTags: {
             get() {
                 return axios.get('/tags').then(response => {
-                    return response.data;
+                    this.tags = response.data;
+                    return this.tags;
                 }).catch(error => {
                     console.log(error);
                     return error;
@@ -74,7 +76,24 @@ var main = new Vue({
                 this.selectedTag = tag;
             }).catch(error => {
                 console.log(error);
-            })
+            });
+        },
+
+        deleteTagForId: function(tagId) {
+            var self = this;
+
+            axios.delete('/tags/tagid/' + tagId).then(response => {
+                if (response.data.tagsRowsDeleted >= 1) {
+                    // Remove the tag in question
+                    self.tags = self.tags.filter(tag => {
+                        return tag.id != tagId;
+                    });
+
+                    self.messagesForSelectedTag = [];
+                }
+            }).catch(error => {
+                console.log(error);
+            });
         },
         
         isTagActive: function(tag) {
